@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import com.misterioes.shopbel.R
 import com.misterioes.shopbel.data.entity.embedded.ProductWithDetails
 import com.misterioes.shopbel.databinding.FragmentProductsBinding
 import com.misterioes.shopbel.di.ProductAdapterAssistedFactory
@@ -84,7 +85,7 @@ class ProductsFragment : Fragment() {
                             if (quantity > 0 && quantity <= 100) {
                                 productsViewModel.saveToCart(product, quantity)
                             } else {
-                                Toast.makeText(context, "Invalid quantiry", Toast.LENGTH_LONG).show()
+                                Toast.makeText(context, getString(R.string.invalid_quantity), Toast.LENGTH_LONG).show()
                             }
                         }
                     }

@@ -30,7 +30,6 @@ class RegistrationViewModel @Inject constructor(): ViewModel() {
                         createUserInFirestore(userId, email, password, fio)
                     } else {
                         _state.value = Status.Error("Registration error " + task.exception?.message!!)
-                        _state.value = Status.Error("Registration error " + task.exception?.printStackTrace())
                     }
                 }
         }

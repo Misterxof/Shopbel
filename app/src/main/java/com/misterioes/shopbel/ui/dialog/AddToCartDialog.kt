@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.misterioes.shopbel.R
 import com.misterioes.shopbel.data.entity.CartProduct
 import com.misterioes.shopbel.data.entity.embedded.ProductWithDetails
 import com.misterioes.shopbel.databinding.AddToCartDialogBinding
@@ -40,16 +41,28 @@ class AddToCartDialog: DialogFragment() {
         val cartType = binding.cartType
 
         productName.text = product.pack.name
-        productSum.text = "${product.packPrice!!.price / 100} BYN"
+        productSum.text = getString(R.string.product_sum, product.packPrice!!.price / 100)
         productSum.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-        productSumBonus.text =
-            "${(product.packPrice!!.price - product.packPrice!!.bonus) / 100} BYN"
-        productType.text = "for ${product.pack.quant} ${product.unit!!.name}"
+        productSumBonus.text = getString(
+            R.string.product_sum,
+            (product.packPrice!!.price - product.packPrice!!.bonus) / 100
+        )
+        productType.text = getString(
+            R.string.product_type,
+            product.pack.quant,
+            product.unit!!.name
+        )
 
-        cartSum.text = "${(product.packPrice!!.price) / 100} BYN"
-        cartSumBonus.text =
-            "${((product.packPrice!!.price - product.packPrice!!.bonus)) / 100} BYN"
-        cartType.text = "for ${product.pack.quant} ${product.unit!!.name}"
+        cartSum.text = getString(R.string.product_sum, product.packPrice!!.price / 100)
+        cartSumBonus.text = getString(
+            R.string.product_sum,
+            (product.packPrice!!.price - product.packPrice!!.bonus) / 100
+        )
+        cartType.text = getString(
+            R.string.product_type,
+            product.pack.quant,
+            product.unit!!.name
+        )
 
         quantityEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -59,10 +72,16 @@ class AddToCartDialog: DialogFragment() {
                 val quantityText = p0?.toString()
                 if (quantityText != null && quantityText.isNotBlank()) {
                     val quantity = quantityText.toInt()
-                    cartSum.text = "${(product.packPrice!!.price * quantity) / 100} BYN"
-                    cartSumBonus.text =
-                        "${((product.packPrice!!.price - product.packPrice!!.bonus) * quantity) / 100} BYN"
-                    cartType.text = "for ${product.pack.quant * quantity} ${product.unit!!.name}"
+                    cartSum.text = getString(R.string.product_sum, (product.packPrice!!.price * quantity) / 100)
+                    cartSumBonus.text = getString(
+                        R.string.product_sum,
+                        ((product.packPrice!!.price - product.packPrice!!.bonus) * quantity) / 100
+                    )
+                    cartType.text = getString(
+                        R.string.product_type,
+                        product.pack.quant * quantity,
+                        product.unit!!.name
+                    )
                 }
             }
 

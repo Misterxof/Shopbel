@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.misterioes.shopbel.R
 import com.misterioes.shopbel.data.entity.Order
 import com.misterioes.shopbel.data.entity.embedded.ProductWithDetails
 import com.misterioes.shopbel.databinding.FragmentCartBinding
@@ -50,7 +51,10 @@ class OrdersFragment : Fragment() {
         val orderCountTextView = binding.orderCount
         cartProductsRecycleView = binding.cartProductsRecycleView
         val orderButton = binding.orderButton
+        val order_header = binding.orderName
+
         orderButton.visibility = INVISIBLE
+        order_header.text = getString(R.string.order_text)
         cartProductsRecycleView.layoutManager = LinearLayoutManager(context)
         cartProductsRecycleView.adapter = adapter
 

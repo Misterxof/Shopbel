@@ -65,13 +65,13 @@ class LoginFragment : Fragment() {
                     when (it) {
                         is Status.Error -> Toast.makeText(
                             context,
-                            "Something went wrong!",
+                            getString(R.string.error),
                             Toast.LENGTH_LONG
                         ).show()
 
                         is Status.Loading -> {}
                         is Status.Success -> {
-                            Toast.makeText(context, "Loged in!", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, getString(R.string.login_successful), Toast.LENGTH_LONG).show()
                             val intent = Intent(context, MainActivity::class.java)
                             startActivity(intent)
                         }

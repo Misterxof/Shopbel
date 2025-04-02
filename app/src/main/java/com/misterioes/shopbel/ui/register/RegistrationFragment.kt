@@ -49,7 +49,7 @@ class RegistrationFragment : Fragment() {
                     fioEditText.text.toString().split(" ").size == 3) {
                     registrationViewModel.registerUser(loginEditText.text.toString(), passwordEditText.text.toString(), fioEditText.text.toString())
                 } else {
-                    Toast.makeText(context, "Something went wrong!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, getString(R.string.error), Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -64,10 +64,10 @@ class RegistrationFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 registrationViewModel.state.collect {
                     when(it) {
-                        is Status.Error -> Toast.makeText(context, "Something went wrong!", Toast.LENGTH_LONG).show()
+                        is Status.Error -> Toast.makeText(context, getString(R.string.error), Toast.LENGTH_LONG).show()
                         is Status.Loading -> {}
                         is Status.Success -> {
-                            Toast.makeText(context, "Registration complete!", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, getString(R.string.registration_complete), Toast.LENGTH_LONG).show()
                             findNavController().navigate(
                                 R.id.action_navigation_registration_to_navigation_login
                             )

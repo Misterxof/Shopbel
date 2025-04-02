@@ -30,7 +30,6 @@ class ProductRepositoryImplementation @Inject constructor(private val productDao
     suspend fun loadProductsFromFirestore() {
         try {
             val db = Firebase.firestore
-
             val packs = db.collection("pack")
                 .get()
                 .await()
@@ -57,8 +56,6 @@ class ProductRepositoryImplementation @Inject constructor(private val productDao
                 if (it != null && packPrice.isNotEmpty() && unit.isNotEmpty() && barcode.isNotEmpty()) {
                     insertProduct(it, packPrice[0], unit[0], barcode[0])
                 }
-
-                return
             }
         } catch (e: Exception) {
             e.printStackTrace()

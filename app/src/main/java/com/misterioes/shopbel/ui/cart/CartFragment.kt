@@ -15,6 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import com.misterioes.shopbel.R
 import com.misterioes.shopbel.databinding.FragmentCartBinding
 import com.misterioes.shopbel.domain.model.Status
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,7 +50,7 @@ class CartFragment : Fragment() {
             orderSumBonusTextView.text = it.toString()
         }
         cartViewModel.count.observe(viewLifecycleOwner) {
-            orderCountTextView.text = it.toString() + " products"
+            orderCountTextView.text = it.toString() + getString(R.string.products)
         }
 
         orderButton.setOnClickListener {
@@ -76,10 +77,10 @@ class CartFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 cartViewModel.state.collect {
                     when(it) {
-                        is Status.Error -> Toast.makeText(context, "Something went wrong! ${it.error}", Toast.LENGTH_LONG).show()
+                        is Status.Error -> Toast.makeText(context, getString(R.string.error) + " ${it.error}", Toast.LENGTH_LONG).show()
                         is Status.Loading -> {}
                         is Status.Success -> {
-                            Toast.makeText(context, "Order is created!", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, getString(R.string.order_created), Toast.LENGTH_LONG).show()
                         }
                     }
                     cartViewModel.updateState()

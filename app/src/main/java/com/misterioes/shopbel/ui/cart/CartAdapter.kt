@@ -1,10 +1,10 @@
 package com.misterioes.shopbel.ui.cart
 
 import android.graphics.Paint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.misterioes.shopbel.R
 import com.misterioes.shopbel.data.entity.embedded.CartProductWithDetails
 import com.misterioes.shopbel.databinding.CartProductListItemBinding
 
@@ -51,20 +51,39 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CartHolder>() {
         fun bind(cartProduct: CartProductWithDetails) {
             try {
                 productName.text = cartProduct.product.pack.name
-                productSum.text = "${cartProduct.product.packPrice!!.price / 100} BYN"
+                productSum.text = itemView.context.getString(
+                    R.string.product_sum,
+                    cartProduct.product.packPrice!!.price / 100
+                )
                 productSum.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                 cartQuantity.text = "x${cartProduct.cartProduct!!.count}"
-                productSumBonus.text =
-                    "${(cartProduct.product.packPrice!!.price - cartProduct.product.packPrice!!.bonus) / 100} BYN"
-                productType.text =
-                    "for ${cartProduct.product.pack.quant} ${cartProduct.product.unit!!.name}"
+                productSumBonus.text = itemView.context.getString(
+                    R.string.product_sum,
+                    (cartProduct.product.packPrice.price - cartProduct.product.packPrice.bonus) / 100
+                )
+                productType.text = itemView.context.getString(
+                    R.string.product_type,
+                    cartProduct.product.pack.quant,
+                    cartProduct.product.unit!!.name
+                )
 
                 cartSum.text =
-                    "${(cartProduct.product.packPrice!!.price * cartProduct.cartProduct!!.count) / 100} BYN"
+                    itemView.context.getString(
+                        R.string.product_sum,
+                        (cartProduct.product.packPrice.price * cartProduct.cartProduct.count) / 100
+                    )
+                cartSum.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                 cartSumBonus.text =
-                    "${((cartProduct.product.packPrice!!.price - cartProduct.product.packPrice!!.bonus) * cartProduct.cartProduct!!.count) / 100} BYN"
+                    itemView.context.getString(
+                        R.string.product_sum,
+                        ((cartProduct.product.packPrice.price - cartProduct.product.packPrice.bonus) * cartProduct.cartProduct.count) / 100
+                    )
                 cartType.text =
-                    "for ${cartProduct.product.pack.quant * cartProduct.cartProduct!!.count} ${cartProduct.product.unit!!.name}"
+                    itemView.context.getString(
+                        R.string.product_type,
+                        cartProduct.product.pack.quant * cartProduct.cartProduct.count,
+                        cartProduct.product.unit.name
+                    )
             } catch (e: Exception) {
 
             }

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import com.misterioes.shopbel.data.entity.embedded.CartProductWithDetails
+import com.misterioes.shopbel.R
 import com.misterioes.shopbel.data.entity.embedded.OrderProductWithDetails
 import com.misterioes.shopbel.databinding.OrderProductListItemBinding
 
@@ -51,20 +51,41 @@ class OrderAdapter : RecyclerView.Adapter<OrderAdapter.OrderHolder>() {
         fun bind(orderProduct: OrderProductWithDetails) {
             try {
                 productName.text = orderProduct.product.pack.name
-                productSum.text = "${orderProduct.product.packPrice!!.price / 100} BYN"
+                productSum.text = itemView.context.getString(
+                    R.string.product_sum,
+                    orderProduct.product.packPrice!!.price / 100
+                )
                 productSum.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                 cartQuantity.text = "x${orderProduct.orderProduct!!.count}"
                 productSumBonus.text =
-                    "${(orderProduct.product.packPrice!!.price - orderProduct.product.packPrice!!.bonus) / 100} BYN"
+                    itemView.context.getString(
+                        R.string.product_sum,
+                        (orderProduct.product.packPrice.price - orderProduct.product.packPrice.bonus) / 100
+                    )
                 productType.text =
-                    "for ${orderProduct.product.pack.quant} ${orderProduct.product.unit!!.name}"
+                    itemView.context.getString(
+                        R.string.product_type,
+                        orderProduct.product.pack.quant,
+                        orderProduct.product.unit!!.name
+                    )
 
                 cartSum.text =
-                    "${(orderProduct.product.packPrice!!.price * orderProduct.orderProduct!!.count) / 100} BYN"
+                    itemView.context.getString(
+                        R.string.product_sum,
+                        (orderProduct.product.packPrice.price * orderProduct.orderProduct.count) / 100
+                    )
+                cartSum.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                 cartSumBonus.text =
-                    "${((orderProduct.product.packPrice!!.price - orderProduct.product.packPrice!!.bonus) * orderProduct.orderProduct!!.count) / 100} BYN"
+                    itemView.context.getString(
+                        R.string.product_sum,
+                        ((orderProduct.product.packPrice.price - orderProduct.product.packPrice.bonus) * orderProduct.orderProduct.count) / 100
+                    )
                 cartType.text =
-                    "for ${orderProduct.product.pack.quant * orderProduct.orderProduct!!.count} ${orderProduct.product.unit!!.name}"
+                    itemView.context.getString(
+                        R.string.product_type,
+                        orderProduct.product.pack.quant * orderProduct.orderProduct.count,
+                        orderProduct.product.unit!!.name
+                    )
                 displayBarcode(orderProduct.product.barcode!!.body, barcodeImageView)
             } catch (e: Exception) {
 

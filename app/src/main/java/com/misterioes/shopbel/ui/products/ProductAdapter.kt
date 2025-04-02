@@ -1,11 +1,11 @@
 package com.misterioes.shopbel.ui.products
 
 import android.graphics.Paint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.misterioes.shopbel.R
 import com.misterioes.shopbel.data.entity.embedded.ProductWithDetails
 import com.misterioes.shopbel.databinding.ProductsListItemBinding
 import dagger.assisted.Assisted
@@ -56,11 +56,18 @@ class ProductAdapter @AssistedInject constructor(
         fun bind(product: ProductWithDetails) {
             this.product = product
             productName.text = product.pack.name
-            productSum.text = "${product.packPrice!!.price / 100} BYN"
+            productSum.text =
+                itemView.context.getString(R.string.product_sum, product.packPrice!!.price / 100)
             productSum.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-            productSumWithBonus.text =
-                "${(product.packPrice!!.price - product.packPrice!!.bonus) / 100} BYN"
-            productType.text = "for ${product.pack.quant} ${product.unit!!.name}"
+            productSumWithBonus.text = itemView.context.getString(
+                R.string.product_sum,
+                (product.packPrice.price - product.packPrice.bonus) / 100
+            )
+            productType.text = itemView.context.getString(
+                R.string.product_type,
+                product.pack.quant,
+                product.unit!!.name
+            )
         }
 
         override fun onClick(p0: View?) {

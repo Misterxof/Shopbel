@@ -24,4 +24,16 @@
     <string name="fio">"ФИО"</string>
     <string name="order">"Заказать"</string>
     <string name="add">"Доавить в корзину"</string>
+    <string name="login_successful">"Успешный вход!"</string>
+    <string name="error">"Что-то пошло не так!"</string>
+    <string name="order_created">"Заказ оплачен!"</string>
+    <string name="order_text">"Заказ"</string>
+    <string name="registration_complete">"Регистрация завершена!"</string>
+    <string name="invalid_quantity">"Неверное количество!"</string>
+    <string name="registration_error">"Ошибка регистрации! "</string>
+    <string name="products">" товаров"</string>
+    <string name="quantity">"Количество: "</string>
+    <string name="product_sum">"%1$.2f РУБ"</string>
+    <string name="product_type">"за %1$d %2$s"</string>
+    <string name="price">"Цена: "</string>
 </resources>

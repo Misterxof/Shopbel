@@ -53,7 +53,7 @@
                 style="@style/HeaderText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Order"
+                android:text="@string/order"
                 app:layout_constraintBottom_toTopOf="@id/order_sum_bonus"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -63,7 +63,7 @@
                 style="@style/SumBonusText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Price: "
+                android:text="@string/price"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/order_name" />
 
@@ -80,7 +80,7 @@
                 android:id="@+id/label_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quantity: "
+                android:text="@string/quantity"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/order_sum_bonus" />
 
