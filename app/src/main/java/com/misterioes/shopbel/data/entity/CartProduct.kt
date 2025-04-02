@@ -11,6 +11,6 @@ data class CartProduct(
         @ColumnInfo(name = "pack_id")
         val packId: Long,
         @ColumnInfo(name = "user_id")
-        val userId: Long,
+        val userId: String,
         val count: Int
 )

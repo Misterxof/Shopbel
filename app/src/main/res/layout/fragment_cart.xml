@@ -77,11 +77,19 @@
                 app:layout_constraintTop_toBottomOf="@id/order_name" />
 
             <TextView
+                android:id="@+id/label_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantity: "
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/order_sum_bonus" />
+
+            <TextView
                 android:id="@+id/order_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="for 5 products"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/label_count"
                 app:layout_constraintTop_toBottomOf="@id/order_sum_bonus" />
 
             <Button

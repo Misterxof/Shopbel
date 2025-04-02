@@ -8,6 +8,7 @@ import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -30,7 +31,7 @@ class OrdersFragment : Fragment() {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
     private val adapter: OrderAdapter by lazy { OrderAdapter() }
-    private lateinit var ordersViewModel: OrdersViewModel
+    private val ordersViewModel: OrdersViewModel by viewModels()
     private lateinit var cartProductsRecycleView: RecyclerView
     private lateinit var order: Order
 
@@ -42,9 +43,6 @@ class OrdersFragment : Fragment() {
         arguments?.let {
             order = it.getSerializable(ARG_ORDER) as Order
         }
-
-        ordersViewModel =
-            ViewModelProvider(this).get(OrdersViewModel::class.java)
 
         _binding = FragmentCartBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -63,8 +61,8 @@ class OrdersFragment : Fragment() {
             orderCountTextView.text = it.toString()
         }
 
-        ordersViewModel.loadProducts(order)
         initOrderProducts()
+        ordersViewModel.loadProducts(order)
 
         return root
     }
@@ -79,8 +77,16 @@ class OrdersFragment : Fragment() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.e("ProductsFragment", "onPause")
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.e("ProductsFragment", "onDestroyView")
+        ordersViewModel.cancelAllOperations()
+        viewModelStore.clear()
         _binding = null
     }
 

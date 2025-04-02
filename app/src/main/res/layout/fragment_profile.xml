@@ -36,30 +36,57 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/login"
+                android:id="@+id/login_label"
                 style="@style/SumBonusText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="login"
+                android:text="Login: "
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/header" />
 
             <TextView
-                android:id="@+id/password"
+                android:id="@+id/login"
+                style="@style/SubHeaderText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                app:layout_constraintStart_toEndOf="@id/login_label"
+                app:layout_constraintTop_toBottomOf="@id/header" />
+
+            <TextView
+                android:id="@+id/password_label"
                 style="@style/SumBonusText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="password"
+                android:text="Password: "
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/login" />
+                app:layout_constraintTop_toBottomOf="@id/login_label"/>
+
+            <TextView
+                android:id="@+id/password"
+                style="@style/SubHeaderText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                app:layout_constraintStart_toEndOf="@id/password_label"
+                app:layout_constraintTop_toBottomOf="@id/login_label" />
+
+            <TextView
+                android:id="@+id/fio_label"
+                style="@style/SumBonusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FIO: "
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/password" />
 
             <TextView
                 android:id="@+id/fio"
-                style="@style/SumBonusText"
+                style="@style/SubHeaderText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="fio"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fio_label"
                 app:layout_constraintTop_toBottomOf="@id/password" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

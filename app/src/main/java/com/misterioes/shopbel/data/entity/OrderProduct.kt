@@ -10,10 +10,10 @@ data class OrderProduct(
     @ColumnInfo(name = "pack_id")
     val packId: Long,
     @ColumnInfo(name = "user_id")
-    val userId: Long,
+    val userId: String,
     @ColumnInfo(name = "order_id")
     val orderId: Long,
     val count: Int
 ) {
-    constructor() : this("0", 0, 0, 0, 0)
+    constructor() : this("0", 0, "", 0, 0)
 }

@@ -35,7 +35,6 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CartHolder>() {
         val itemCount = cartProducts.size
         cartProducts = emptyList()
         notifyItemRangeRemoved(0, itemCount)
-        Log.e("///////-3-", cartProducts.size.toString())
     }
 
     inner class CartHolder(binding: CartProductListItemBinding) :

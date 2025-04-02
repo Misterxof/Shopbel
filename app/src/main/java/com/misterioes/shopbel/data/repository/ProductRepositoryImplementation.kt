@@ -31,12 +31,10 @@ class ProductRepositoryImplementation @Inject constructor(private val productDao
         try {
             val db = Firebase.firestore
 
-            Log.e("fireeee", "----------------------------------")
             val packs = db.collection("pack")
                 .get()
                 .await()
                 .toObjects(Pack::class.java)
-            Log.e("fireeee", "----------------------------------")
 
             packs.forEach {
                 val packPrice = db.collection("pack_price")
@@ -44,24 +42,23 @@ class ProductRepositoryImplementation @Inject constructor(private val productDao
                     .get()
                     .await()
                     .toObjects(PackPrice::class.java)
-                Log.e("PACK p", packPrice.toString())
 
                 val unit = db.collection("unit")
                     .whereEqualTo("id", it.unit_id)
                     .get()
                     .await()
                     .toObjects(Unit::class.java)
-                Log.e("PACK u ", it.unit_id.toString())
-                Log.e("PACK u ", unit.toString())
 
                 val barcode = db.collection("barcode")
                     .whereEqualTo("pack_id", it.id)
                     .get()
                     .await()
                     .toObjects(Barcode::class.java)
-                Log.e("PACK b", barcode.toString())
-                if (it != null && packPrice.isNotEmpty() && unit.isNotEmpty() && barcode.isNotEmpty())
+                if (it != null && packPrice.isNotEmpty() && unit.isNotEmpty() && barcode.isNotEmpty()) {
                     insertProduct(it, packPrice[0], unit[0], barcode[0])
+                }
+
+                return
             }
         } catch (e: Exception) {
             e.printStackTrace()

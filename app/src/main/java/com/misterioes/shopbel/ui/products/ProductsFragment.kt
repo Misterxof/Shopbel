@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +21,8 @@ import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.misterioes.shopbel.data.entity.embedded.ProductWithDetails
 import com.misterioes.shopbel.databinding.FragmentProductsBinding
 import com.misterioes.shopbel.di.ProductAdapterAssistedFactory
+import com.misterioes.shopbel.domain.model.User
+import com.misterioes.shopbel.domain.model.UserInfo
 import com.misterioes.shopbel.ui.dialog.AddToCartDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -32,16 +36,13 @@ class ProductsFragment : Fragment() {
     private lateinit var adapter: ProductAdapter
     @Inject
     lateinit var productAdapterAssistedFactory: ProductAdapterAssistedFactory
-    private lateinit var productsViewModel: ProductsViewModel
+    private val productsViewModel: ProductsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        productsViewModel =
-            ViewModelProvider(this).get(ProductsViewModel::class.java)
-
         _binding = FragmentProductsBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val productsRecyclerView = binding.productsRecycleView
@@ -51,6 +52,10 @@ class ProductsFragment : Fragment() {
         productsRecyclerView.layoutManager = LinearLayoutManager(context)
         productsRecyclerView.adapter = adapter
         initProducts()
+        productsViewModel.loadProductsFromFirestore()
+
+        // TO DELETE
+        UserInfo.user = User("123", "user@gmail.com", "user", "Ivanov Ivan Ivanovich")
 
         return root
     }
@@ -82,6 +87,8 @@ class ProductsFragment : Fragment() {
                             val quantity = b.getInt(AddToCartDialog.ARG_QUANTITY)
                             if (quantity > 0 && quantity <= 100) {
                                 productsViewModel.saveToCart(product, quantity)
+                            } else {
+                                Toast.makeText(context, "Invalid quantiry", Toast.LENGTH_LONG).show()
                             }
                         }
                     }

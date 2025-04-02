@@ -9,6 +9,7 @@ import com.misterioes.shopbel.data.entity.Order
 import com.misterioes.shopbel.data.entity.embedded.CartProductWithDetails
 import com.misterioes.shopbel.data.entity.embedded.ProductWithDetails
 import com.misterioes.shopbel.domain.model.Status
+import com.misterioes.shopbel.domain.model.UserInfo
 import com.misterioes.shopbel.domain.usecase.OrderUseCase
 import com.misterioes.shopbel.domain.usecase.ProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -42,16 +44,19 @@ class CartViewModel @Inject constructor(
     fun loadCartProducts() {
         viewModelScope.launch(Dispatchers.IO) {
             productUseCase.loadCartProducts().collect {
+                var newPrice = 0.0
+                var count = 0
                 _products.value = it
-                _count.postValue(it.size)
-                Log.e("///2////", it.size.toString())
-                it.forEach {
-                    val cp = it.cartProduct.toString()
-                    val c = it.product.toString()
-                    _price.postValue(_price.value?.plus((it.product.packPrice!!.price - it.product.packPrice.bonus) / 100))
-                    Log.e("///////", cp)
-                    Log.e("///////", c)
+                if (it.isEmpty()) {
+                    _price.postValue(0.0)
+                    _count.postValue(0)
                 }
+                it.forEach {
+                    newPrice += (it.product.packPrice!!.price - it.product.packPrice.bonus) * it.cartProduct!!.count / 100
+                    count += it.cartProduct.count
+                }
+                _price.postValue(newPrice)
+                _count.postValue(count)
             }
         }
     }
@@ -59,14 +64,12 @@ class CartViewModel @Inject constructor(
     fun sendOrder() {
         viewModelScope.launch(Dispatchers.IO) {
             val lastId = (orderUseCase.getLastOrderId() ?: 0L) + 1
-            val order = Order(lastId, 123L, Date())
+            val order = Order(lastId, UserInfo.user!!.id, Date())
 
             createOrder(order).collect {
-                Log.e("///////", it.toString())
                 _state.value = it
                 if (it is Status.Success) {
                     orderUseCase.createNewOrderProducts(products.value, order).collect {
-                        Log.e("///////-1-", it.toString())
                         _state.value = it
                         if (it is Status.Success) {
                             _state.value = Status.Success("clear")

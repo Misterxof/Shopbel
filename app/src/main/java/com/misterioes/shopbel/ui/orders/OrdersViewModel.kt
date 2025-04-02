@@ -14,6 +14,7 @@ import com.misterioes.shopbel.domain.usecase.OrderUseCase
 import com.misterioes.shopbel.domain.usecase.ProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -35,14 +36,6 @@ class OrdersViewModel  @Inject constructor(
     private val _count = MutableLiveData<Int>()
     val count: LiveData<Int> = _count
 
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            orderUseCase.getAllOrderProducts().collect {
-                Log.e("///1////", it.toString())
-            }
-        }
-    }
-
     fun loadProducts(order: Order) {
         loadOrderProducts(order)
         syncOrderProductsWithFirestore(order)
@@ -52,16 +45,19 @@ class OrdersViewModel  @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
 
             orderUseCase.getAllOrderProductsByOrderId(order.id.toString()).collect {
+                var newPrice = 0.0
+                var count = 0
                 _products.value = it
-                _count.postValue(it.size)
-                Log.e("///2////", it.size.toString())
-                it.forEach {
-                    val cp = it.orderProduct.toString()
-                    val c = it.product.toString()
-                    _price.postValue(_price.value?.plus((it.product.packPrice!!.price - it.product.packPrice.bonus) / 100))
-                    Log.e("///////", cp)
-                    Log.e("///////", c)
+                if (it.isEmpty()) {
+                    _price.postValue(0.0)
+                    _count.postValue(0)
                 }
+                it.forEach {
+                    newPrice += (it.product.packPrice!!.price - it.product.packPrice.bonus) * it.orderProduct!!.count / 100
+                    count += it.orderProduct.count
+                }
+                _price.postValue(newPrice)
+                _count.postValue(count)
             }
         }
     }
@@ -70,5 +66,9 @@ class OrdersViewModel  @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             orderUseCase.syncOrderProductsWithFirestore(order.id)
         }
+    }
+
+    fun cancelAllOperations() {
+        viewModelScope.cancel()
     }
 }

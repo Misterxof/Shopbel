@@ -24,7 +24,6 @@ class ProfileViewModel @Inject constructor(
 
     init {
         loadOrdersFromRoom()
-        loadOrdersFromFirestore()
     }
 
     fun loadOrdersFromRoom() {

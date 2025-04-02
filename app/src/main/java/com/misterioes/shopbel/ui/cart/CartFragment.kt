@@ -49,7 +49,7 @@ class CartFragment : Fragment() {
             orderSumBonusTextView.text = it.toString()
         }
         cartViewModel.count.observe(viewLifecycleOwner) {
-            orderCountTextView.text = it.toString()
+            orderCountTextView.text = it.toString() + " products"
         }
 
         orderButton.setOnClickListener {
@@ -66,9 +66,7 @@ class CartFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 cartViewModel.products.collect {
                     if (it.isEmpty()) {
-                        Log.e("///////-2-", "CLEAR")
                         adapter.clear()
-                        cartProductsRecycleView.invalidate()
                     } else adapter.setCartProducts(it)
                 }
             }
@@ -82,9 +80,6 @@ class CartFragment : Fragment() {
                         is Status.Loading -> {}
                         is Status.Success -> {
                             Toast.makeText(context, "Order is created!", Toast.LENGTH_LONG).show()
-                            if (it.data == "clear") {
-                                adapter.clear()
-                            }
                         }
                     }
                 }

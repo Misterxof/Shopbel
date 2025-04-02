@@ -18,6 +18,7 @@ import com.misterioes.shopbel.R
 import com.misterioes.shopbel.databinding.FragmentProfileBinding
 import com.misterioes.shopbel.di.OrderAdapterAssistedFactory
 import com.misterioes.shopbel.di.ProductAdapterAssistedFactory
+import com.misterioes.shopbel.domain.model.UserInfo
 import com.misterioes.shopbel.ui.orders.OrdersFragment
 import com.misterioes.shopbel.ui.products.ProductAdapter
 import com.misterioes.shopbel.ui.products.ProductsViewModel
@@ -45,7 +46,15 @@ class ProfileFragment : Fragment() {
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        val loginTextView = binding.login
+        val passwordTextView = binding.password
+        val fioTextView = binding.login
         val ordersRecyclerView = binding.historyRecycleView
+
+        loginTextView.text = UserInfo.user!!.login
+        passwordTextView.text = UserInfo.user!!.password
+        fioTextView.text = UserInfo.user!!.fio
+
         adapter = orderAdapterAssistedFactory.create { order ->
             findNavController().navigate(
                 R.id.action_navigation_profile_to_navigation_orders,
@@ -55,6 +64,8 @@ class ProfileFragment : Fragment() {
         ordersRecyclerView.layoutManager = LinearLayoutManager(context)
         ordersRecyclerView.adapter = adapter
         initOrders()
+        profileViewModel.loadOrdersFromFirestore()
+
         return root
     }
 

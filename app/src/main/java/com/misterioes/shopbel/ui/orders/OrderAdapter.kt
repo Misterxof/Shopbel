@@ -2,7 +2,6 @@ package com.misterioes.shopbel.ui.orders
 
 import android.graphics.Bitmap
 import android.graphics.Paint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -12,12 +11,10 @@ import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.misterioes.shopbel.data.entity.embedded.CartProductWithDetails
 import com.misterioes.shopbel.data.entity.embedded.OrderProductWithDetails
-import com.misterioes.shopbel.databinding.CartProductListItemBinding
 import com.misterioes.shopbel.databinding.OrderProductListItemBinding
-import com.misterioes.shopbel.ui.cart.CartAdapter
 
 class OrderAdapter : RecyclerView.Adapter<OrderAdapter.OrderHolder>() {
-    private var products = mutableListOf<OrderProductWithDetails>()
+    private var products: List<OrderProductWithDetails> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderHolder {
         val binding =
@@ -35,12 +32,8 @@ class OrderAdapter : RecyclerView.Adapter<OrderAdapter.OrderHolder>() {
     }
 
     fun setOrderProducts(list: List<OrderProductWithDetails>) {
-        list.forEach {
-            if (!products.contains(it)) {
-                products.add(it)
-                notifyDataSetChanged()
-            }
-        }
+        products = list.toList()
+        notifyDataSetChanged()
     }
 
     inner class OrderHolder(binding: OrderProductListItemBinding) :

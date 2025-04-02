@@ -4,13 +4,16 @@ import android.util.Log
 import com.misterioes.shopbel.data.entity.CartProduct
 import com.misterioes.shopbel.data.entity.embedded.CartProductWithDetails
 import com.misterioes.shopbel.data.entity.embedded.ProductWithDetails
+import com.misterioes.shopbel.domain.model.UserInfo
 import com.misterioes.shopbel.domain.repository.CartRepository
 import com.misterioes.shopbel.domain.repository.ProductRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class ProductUseCase @Inject constructor(
@@ -30,17 +33,17 @@ class ProductUseCase @Inject constructor(
     }
 
     suspend fun saveToCart(product: ProductWithDetails, quantity: Int) {
-        val price = product.packPrice!!.price * quantity
-        val priceBonus = (product.packPrice.price - product.packPrice.bonus) * quantity
-        val type = "for ${product.pack.quant * quantity} ${product.unit!!.name}"
-        val cartProduct = CartProduct(product.pack.id, 123L, quantity)
+        val cartProduct = CartProduct(product.pack.id, UserInfo.user!!.id, quantity)
         cartRepository.addCartProduct(cartProduct)
+    }
+
+    suspend fun getAllCartProducts(): Flow<List<CartProduct>> {
+        return cartRepository.getAllCartProducts()
     }
 
     suspend fun loadCartProducts(): Flow<List<CartProductWithDetails>> {
         return cartRepository.getAllCartProducts()
-            .filter { it.isNotEmpty() }
             .map { it.map { cartProduct -> cartProduct.packId } }
-            .flatMapConcat { ids -> cartRepository.getCartProductsWithDetailsByIds(ids) }
+            .flatMapLatest { ids -> cartRepository.getCartProductsWithDetailsByIds(ids) }
     }
 }

@@ -12,6 +12,7 @@ import com.misterioes.shopbel.data.entity.Unit
 import com.misterioes.shopbel.data.entity.embedded.CartProductWithDetails
 import com.misterioes.shopbel.data.entity.embedded.OrderProductWithDetails
 import com.misterioes.shopbel.domain.model.Status
+import com.misterioes.shopbel.domain.model.UserInfo
 import com.misterioes.shopbel.domain.repository.CartRepository
 import com.misterioes.shopbel.domain.repository.OrderProductRepository
 import com.misterioes.shopbel.domain.repository.OrderRepository
@@ -55,7 +56,7 @@ class OrderUseCase @Inject constructor(
     }
 
     suspend fun syncOrderProductsWithFirestore(orderId: Long) {
-        val orderProducts = db.collection("user").document("123")
+        val orderProducts = db.collection("user").document(UserInfo.user!!.id)
             .collection("orders_products")
             .whereEqualTo("order_id", orderId)
             .get()
@@ -64,7 +65,7 @@ class OrderUseCase @Inject constructor(
             OrderProduct(
                 id = doc.id,
                 packId = doc.getLong("pack_id") ?: 0,
-                userId = doc.getLong("user_id") ?: 0,
+                userId = doc.getString("user_id") ?: "",
                 orderId = doc.getLong("order_id") ?: 0,
                 count = doc.getLong("count")?.toInt() ?: 0
             )
@@ -79,14 +80,14 @@ class OrderUseCase @Inject constructor(
     }
 
     suspend fun syncOrdersWithFirestore() {
-        val orders = db.collection("user").document("123")
+        val orders = db.collection("user").document(UserInfo.user!!.id)
             .collection("orders")
             .get()
             .await()
             .map { doc ->
                 Order(
                     id = doc.getLong("id") ?: 0,
-                    userId = doc.getLong("user_id") ?: 0,
+                    userId = doc.getString("user_id") ?: "",
                     date = doc.getDate("date") ?: Date()
                 )
             }
@@ -179,7 +180,7 @@ class OrderUseCase @Inject constructor(
 
     suspend fun getLastOrderId(): Long? {
         val order = db.collection("user")
-            .document("123")
+            .document(UserInfo.user!!.id)
             .collection("orders")
             .orderBy("date", Query.Direction.DESCENDING)
             .limit(1)

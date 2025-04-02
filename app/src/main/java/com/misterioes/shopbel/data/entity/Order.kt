@@ -12,8 +12,8 @@ data class Order(
     @PrimaryKey val id: Long,
     @PropertyName("user_id")
     @ColumnInfo(name = "user_id")
-    val userId: Long,
+    val userId: String,
     val date: Date
 ): Serializable {
-    constructor() : this(0, 0, Date())
+    constructor() : this(0, "", Date())
 }

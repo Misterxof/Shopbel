@@ -1,6 +1,7 @@
 package com.misterioes.shopbel.ui.products
 
 import android.graphics.Paint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,7 @@ class ProductAdapter @AssistedInject constructor(
 
     fun setProducts(list: List<ProductWithDetails>) {
         list.forEach {
+            Log.e("*************", products.size.toString())
             if (!products.contains(it)) {
                 products.add(it)
                 notifyDataSetChanged()
