@@ -1,3 +1,6 @@
+
+**Stack:** Kotlin, MVVM, Clean Architecture, Dagger 2, Hilt, Room, Firebase, 
+Coroutines, Flow. 
 # Экран входа / регистации
 
   <table align="left" style="width:250px; border:none; margin-right:20px">
