@@ -54,9 +54,6 @@ class ProductsFragment : Fragment() {
         initProducts()
         productsViewModel.loadProductsFromFirestore()
 
-        // TO DELETE
-        UserInfo.user = User("123", "user@gmail.com", "user", "Ivanov Ivan Ivanovich")
-
         return root
     }
 
@@ -69,7 +66,6 @@ class ProductsFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 productsViewModel.products.collect {
-                    Log.e("*************", it.toString())
                     adapter.setProducts(it)
                 }
             }

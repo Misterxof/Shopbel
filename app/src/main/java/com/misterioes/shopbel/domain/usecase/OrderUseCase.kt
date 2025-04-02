@@ -11,6 +11,7 @@ import com.misterioes.shopbel.data.entity.Pack
 import com.misterioes.shopbel.data.entity.Unit
 import com.misterioes.shopbel.data.entity.embedded.CartProductWithDetails
 import com.misterioes.shopbel.data.entity.embedded.OrderProductWithDetails
+import com.misterioes.shopbel.domain.Util
 import com.misterioes.shopbel.domain.model.Status
 import com.misterioes.shopbel.domain.model.UserInfo
 import com.misterioes.shopbel.domain.repository.CartRepository
@@ -25,6 +26,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.util.Date
@@ -42,14 +44,11 @@ class OrderUseCase @Inject constructor(
     }
 
     suspend fun getAllOrdersFromRoom(): Flow<List<Order>> {
-        return orderRepository.getAllOrders()
+        return orderRepository.getAllOrders(UserInfo.user!!.id)
     }
 
     suspend fun getAllOrderProductsByOrderId(orderId: String): Flow<List<OrderProductWithDetails>> {
-        Log.e("///q////",orderId)
-        return orderProductRepository.getAllOrderProductsByOrderId(orderId)
-            .map { Log.e("///3////", it.toString())
-             it}
+        return orderProductRepository.getAllOrderProductsByOrderId(orderId, UserInfo.user!!.id)
             .filter { it.isNotEmpty() }
             .map { it.map { product -> product.packId } }
             .flatMapConcat { ids -> orderProductRepository.getOrderProductsWithDetailsByIds(ids) }
@@ -71,10 +70,7 @@ class OrderUseCase @Inject constructor(
             )
         }
 
-        Log.e("///4//// o_id", orderId.toString())
-        Log.e("///4//// sze", orderProducts.size.toString())
         orderProducts.forEach {
-            Log.e("///4////", it.toString())
             orderProductRepository.addOrderProduct(it)
         }
     }
@@ -169,10 +165,8 @@ class OrderUseCase @Inject constructor(
     }
 
     fun addOrderProducts(orderProducts: List<OrderProduct>) {
-        Log.e("OrderUseCase 1", orderProducts.toString())
         CoroutineScope(Job() + Dispatchers.IO).launch {
             orderProducts.forEach {
-                Log.e("OrderUseCase 2", it.toString())
                 orderProductRepository.addOrderProduct(it)
             }
         }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_products">
+    app:startDestination="@+id/navigation_login">
 
     <fragment
         android:id="@+id/navigation_login"
@@ -28,19 +28,19 @@
     <fragment
         android:id="@+id/navigation_products"
         android:name="com.misterioes.shopbel.ui.products.ProductsFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_products"
         tools:layout="@layout/fragment_products" />
 
     <fragment
         android:id="@+id/navigation_cart"
         android:name="com.misterioes.shopbel.ui.cart.CartFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_cart"
         tools:layout="@layout/fragment_cart" />
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.misterioes.shopbel.ui.profile.ProfileFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_navigation_profile_to_navigation_orders"

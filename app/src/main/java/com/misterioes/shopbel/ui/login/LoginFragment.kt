@@ -37,9 +37,6 @@ class LoginFragment : Fragment() {
         val loginButton = binding.loginButton
         val registrationButton = binding.registerButton
 
-        loginEditText.setText("shopbel@gmail.com")
-        passwordEditText.setText("test123")
-
         loginButton.setOnClickListener {
             if (passwordEditText.text.toString().isNotEmpty() && passwordEditText.text.toString()
                     .isNotBlank()
@@ -74,7 +71,7 @@ class LoginFragment : Fragment() {
 
                         is Status.Loading -> {}
                         is Status.Success -> {
-                            Toast.makeText(context, "Order is created!", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, "Loged in!", Toast.LENGTH_LONG).show()
                             val intent = Intent(context, MainActivity::class.java)
                             startActivity(intent)
                         }

@@ -24,7 +24,6 @@ class ProductsViewModel @Inject constructor(private val productUseCase: ProductU
     fun loadProductsFromRoom() {
         viewModelScope.launch(Dispatchers.IO) {
             productUseCase.loadProductsFromRoom().collect {
-                Log.e("HomeViewModel", it.toString())
                 _products.value = it
             }
         }
@@ -32,7 +31,6 @@ class ProductsViewModel @Inject constructor(private val productUseCase: ProductU
 
     fun loadProductsFromFirestore() {
         viewModelScope.launch(Dispatchers.IO) {
-            Log.e("ViewModel", "syncProductsWithFirestore")
             productUseCase.syncProductsWithFirestore()
         }
     }

@@ -76,12 +76,13 @@ class CartFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 cartViewModel.state.collect {
                     when(it) {
-                        is Status.Error -> Toast.makeText(context, "Something went wrong!", Toast.LENGTH_LONG).show()
+                        is Status.Error -> Toast.makeText(context, "Something went wrong! ${it.error}", Toast.LENGTH_LONG).show()
                         is Status.Loading -> {}
                         is Status.Success -> {
                             Toast.makeText(context, "Order is created!", Toast.LENGTH_LONG).show()
                         }
                     }
+                    cartViewModel.updateState()
                 }
             }
         }

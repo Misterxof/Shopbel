@@ -2,10 +2,10 @@
     <string name="app_name">Shopbel</string>
     <string name="title_login">Login</string>
     <string name="title_register">Registration</string>
-    <string name="title_home">Products</string>
+    <string name="title_products">Products</string>
     <string name="title_order">Orders</string>
-    <string name="title_dashboard">Cart</string>
-    <string name="title_notifications">Profile</string>
+    <string name="title_cart">Cart</string>
+    <string name="title_profile">Profile</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -15,4 +15,12 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="label_login">"Email: "</string>
+    <string name="label_password">"Password: "</string>
+    <string name="label_fio">"Fio: "</string>
+    <string name="login">"Email"</string>
+    <string name="password">"Password"</string>
+    <string name="fio">"Fio"</string>
+    <string name="order">"Order"</string>
+    <string name="add">"Add to cart"</string>
 </resources>

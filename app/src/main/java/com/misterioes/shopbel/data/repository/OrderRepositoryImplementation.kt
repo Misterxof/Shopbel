@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class OrderRepositoryImplementation @Inject constructor(private val orderDao: OrderDao) : OrderRepository {
-    override fun getAllOrders(): Flow<List<Order>> {
-        return orderDao.getAllOrders()
+    override fun getAllOrders(userId: String): Flow<List<Order>> {
+        return orderDao.getAllOrders(userId)
     }
 
     override suspend fun addOrder(order: Order) {

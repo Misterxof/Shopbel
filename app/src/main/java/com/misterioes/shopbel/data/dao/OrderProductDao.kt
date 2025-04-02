@@ -24,8 +24,8 @@ interface OrderProductDao {
     @Query("SELECT * FROM order_product")
     fun getAllOrderProducts() : Flow<List<OrderProduct>>
 
-    @Query("SELECT * FROM order_product WHERE order_id == :orderId")
-    fun getAllOrderProductsByOrderId(orderId: String) : Flow<List<OrderProduct>>
+    @Query("SELECT * FROM order_product WHERE order_id == :orderId AND user_id == :userId")
+    fun getAllOrderProductsByOrderId(orderId: String, userId: String) : Flow<List<OrderProduct>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addOrderProduct(orderProduct: OrderProduct)

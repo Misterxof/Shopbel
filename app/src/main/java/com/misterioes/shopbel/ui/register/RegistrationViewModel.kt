@@ -19,7 +19,6 @@ class RegistrationViewModel @Inject constructor(): ViewModel() {
 
     fun registerUser(email: String, password: String, fio: String) {
         viewModelScope.launch {
-            Log.e("REG", "reregister ${email.toString()}")
             val auth = FirebaseAuth.getInstance()
 
             auth.createUserWithEmailAndPassword(email, password)
@@ -30,7 +29,6 @@ class RegistrationViewModel @Inject constructor(): ViewModel() {
 
                         createUserInFirestore(userId, email, password, fio)
                     } else {
-                        Log.e("Registration", "Error: ${task.exception?.message}")
                         _state.value = Status.Error("Registration error " + task.exception?.message!!)
                         _state.value = Status.Error("Registration error " + task.exception?.printStackTrace())
                     }
@@ -52,7 +50,6 @@ class RegistrationViewModel @Inject constructor(): ViewModel() {
             .document(userId)
             .set(user)
             .addOnSuccessListener {
-                Log.d("Firestore", "User document successfully created!")
                 _state.value = Status.Success("Success")
             }
             .addOnFailureListener { e ->

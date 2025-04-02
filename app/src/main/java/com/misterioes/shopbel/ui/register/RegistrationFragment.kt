@@ -41,24 +41,16 @@ class RegistrationFragment : Fragment() {
         val fioEditText = binding.fio
         val registrationButton = binding.registerButton
 
-        loginEditText.setText("shopbel@gmail.com")
-        passwordEditText.setText("test123")
-        password2EditText.setText("test123")
-        fioEditText.setText("test")
-
         registrationButton.setOnClickListener {
             if (passwordEditText.text.toString().isNotEmpty() && passwordEditText.text.toString().isNotBlank()
                 && passwordEditText.text.toString() == password2EditText.text.toString()) {
                 if (loginEditText.text.toString().isNotEmpty() && loginEditText.text.toString().isNotBlank() &&
-                    fioEditText.text.toString().isNotEmpty() && fioEditText.text.toString().isNotBlank()) {
-                    Log.e("REG", "reregister ${loginEditText.text.toString()}")
+                    fioEditText.text.toString().isNotEmpty() && fioEditText.text.toString().isNotBlank() &&
+                    fioEditText.text.toString().split(" ").size == 3) {
                     registrationViewModel.registerUser(loginEditText.text.toString(), passwordEditText.text.toString(), fioEditText.text.toString())
+                } else {
+                    Toast.makeText(context, "Something went wrong!", Toast.LENGTH_LONG).show()
                 }
-            } else {
-                Log.e("REG", "passwordEditText")
-                Log.e("REG", passwordEditText.toString())
-                Log.e("REG", password2EditText.toString())
-                Log.e("REG", (passwordEditText.toString().equals(password2EditText.toString())).toString())
             }
         }
 
@@ -75,7 +67,7 @@ class RegistrationFragment : Fragment() {
                         is Status.Error -> Toast.makeText(context, "Something went wrong!", Toast.LENGTH_LONG).show()
                         is Status.Loading -> {}
                         is Status.Success -> {
-                            Toast.makeText(context, "Order is created!", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, "Registration complete!", Toast.LENGTH_LONG).show()
                             findNavController().navigate(
                                 R.id.action_navigation_registration_to_navigation_login
                             )

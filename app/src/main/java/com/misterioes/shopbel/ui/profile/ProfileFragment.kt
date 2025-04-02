@@ -78,7 +78,6 @@ class ProfileFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 profileViewModel.orders.collect {
-                    Log.e("*************", it.toString())
                     adapter.setOrders(it)
                 }
             }

@@ -17,8 +17,8 @@ class OrderProductRepositoryImplementation @Inject constructor(private val order
         return orderProductDao.getAllOrderProducts()
     }
 
-    override fun getAllOrderProductsByOrderId(orderId: String): Flow<List<OrderProduct>> {
-        return orderProductDao.getAllOrderProductsByOrderId(orderId)
+    override fun getAllOrderProductsByOrderId(orderId: String, userId: String): Flow<List<OrderProduct>> {
+        return orderProductDao.getAllOrderProductsByOrderId(orderId, userId)
     }
 
     override fun getOrderProductsWithDetailsByIds(packIds: List<Long>): Flow<List<OrderProductWithDetails>> {

@@ -29,7 +29,6 @@ class LoginViewModel @Inject constructor(): ViewModel() {
                         val userId = auth.currentUser?.uid ?: ""
                         getUserData(userId)
                     } else {
-                        Log.e("Login", "Error: ${task.exception?.message}")
                         _state.value = Status.Error("SignIn error " + task.exception?.message!!)
                     }
                 }
@@ -52,7 +51,6 @@ class LoginViewModel @Inject constructor(): ViewModel() {
 
                         UserInfo.user = User(id, login, password, fio)
                         _state.value = Status.Success("Success")
-                        Log.e("UserData", "get Success with ",)
                     }
                 }
                 .addOnFailureListener { exception ->

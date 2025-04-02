@@ -77,14 +77,8 @@ class OrdersFragment : Fragment() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        Log.e("ProductsFragment", "onPause")
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.e("ProductsFragment", "onDestroyView")
         ordersViewModel.cancelAllOperations()
         viewModelStore.clear()
         _binding = null

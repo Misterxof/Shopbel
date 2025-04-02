@@ -4,7 +4,7 @@ import com.misterioes.shopbel.data.entity.Order
 import kotlinx.coroutines.flow.Flow
 
 interface OrderRepository {
-    fun getAllOrders(): Flow<List<Order>>
+    fun getAllOrders(userId: String): Flow<List<Order>>
 
     suspend fun addOrder(order: Order)
 

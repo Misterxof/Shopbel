@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Shopbel</string>
+    <string name="title_login">Вход</string>
+    <string name="title_register">Регисация</string>
+    <string name="title_products">Товары</string>
+    <string name="title_order">Заказы</string>
+    <string name="title_cart">Корзина</string>
+    <string name="title_profile">Профиль</string>
+    <string name="title_activity_login">Вход</string>
+    <string name="prompt_email">Почта</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="action_sign_in">Войти или заегистрироваться</string>
+    <string name="action_sign_in_short">Войти</string>
+    <string name="welcome">Привет</string>
+    <string name="invalid_username">почта не верна</string>
+    <string name="invalid_password">Пароль должен быть длиннее 5</string>
+    <string name="login_failed">Ошибка входа</string>
+    <string name="label_login">"Почта: "</string>
+    <string name="label_password">"Пароль: "</string>
+    <string name="label_fio">"ФИО: "</string>
+    <string name="login">"Почта"</string>
+    <string name="password">"Пароль"</string>
+    <string name="fio">"ФИО"</string>
+    <string name="order">"Заказать"</string>
+    <string name="add">"Доавить в корзину"</string>
+</resources>

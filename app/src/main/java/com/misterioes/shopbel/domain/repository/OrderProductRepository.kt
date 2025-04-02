@@ -10,7 +10,7 @@ interface OrderProductRepository {
 
     fun getAllOrderProducts() : Flow<List<OrderProduct>>
 
-    fun getAllOrderProductsByOrderId(orderId: String) : Flow<List<OrderProduct>>
+    fun getAllOrderProductsByOrderId(orderId: String, userId: String) : Flow<List<OrderProduct>>
 
     fun getOrderProductsWithDetailsByIds(packIds: List<Long>): Flow<List<OrderProductWithDetails>>
 

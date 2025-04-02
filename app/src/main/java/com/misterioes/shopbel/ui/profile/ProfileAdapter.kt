@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.misterioes.shopbel.data.entity.Order
 import com.misterioes.shopbel.databinding.HistoryListItemBinding
+import com.misterioes.shopbel.domain.Util
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
@@ -50,7 +51,7 @@ class ProfileAdapter @AssistedInject constructor(
 
         fun bind(order: Order) {
             this.order = order
-            date.text = order.date.toString()
+            date.text = Util.formatDate(order.date)
         }
 
         override fun onClick(p0: View?) {

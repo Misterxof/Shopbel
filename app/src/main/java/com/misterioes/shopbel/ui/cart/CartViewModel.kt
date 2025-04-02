@@ -63,23 +63,31 @@ class CartViewModel @Inject constructor(
 
     fun sendOrder() {
         viewModelScope.launch(Dispatchers.IO) {
-            val lastId = (orderUseCase.getLastOrderId() ?: 0L) + 1
-            val order = Order(lastId, UserInfo.user!!.id, Date())
+            if (_products.value.isNotEmpty()) {
+                val lastId = (orderUseCase.getLastOrderId() ?: 0L) + 1
+                val order = Order(lastId, UserInfo.user!!.id, Date())
 
-            createOrder(order).collect {
-                _state.value = it
-                if (it is Status.Success) {
-                    orderUseCase.createNewOrderProducts(products.value, order).collect {
-                        _state.value = it
-                        if (it is Status.Success) {
-                            _state.value = Status.Success("clear")
-                            _products.value = emptyList()
-                            productUseCase.clearCart()
+                createOrder(order).collect {
+                    _state.value = it
+                    if (it is Status.Success) {
+                        orderUseCase.createNewOrderProducts(products.value, order).collect {
+                            _state.value = it
+                            if (it is Status.Success) {
+                                _state.value = Status.Success("clear")
+                                _products.value = emptyList()
+                                productUseCase.clearCart()
+                            }
                         }
                     }
                 }
+            } else {
+                _state.value = Status.Error("Cart is empty!")
             }
         }
+    }
+
+    fun updateState() {
+        _state.value = Status.Loading(true)
     }
 
     suspend fun createOrder(order: Order): Flow<Status> {

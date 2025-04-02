@@ -32,7 +32,6 @@ class ProductAdapter @AssistedInject constructor(
 
     fun setProducts(list: List<ProductWithDetails>) {
         list.forEach {
-            Log.e("*************", products.size.toString())
             if (!products.contains(it)) {
                 products.add(it)
                 notifyDataSetChanged()
