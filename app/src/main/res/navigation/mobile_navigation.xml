@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_login">
+
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.misterioes.shopbel.ui.login.LoginFragment"
+        android:label="@string/title_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_navigation_login_to_navigation_registration"
+            app:destination="@id/navigation_registration" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_registration"
+        android:name="com.misterioes.shopbel.ui.register.RegistrationFragment"
+        android:label="@string/title_register"
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_navigation_registration_to_navigation_login"
+            app:destination="@id/navigation_login" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_products"
+        android:name="com.misterioes.shopbel.ui.products.ProductsFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_products" />
+
+    <fragment
+        android:id="@+id/navigation_cart"
+        android:name="com.misterioes.shopbel.ui.cart.CartFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_cart" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.misterioes.shopbel.ui.profile.ProfileFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_orders"
+            app:destination="@id/navigation_orders" />
+        <argument
+            android:name="Order"
+            app:argType="com.misterioes.shopbel.data.entity.Order" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_orders"
+        android:name="com.misterioes.shopbel.ui.orders.OrdersFragment"
+        android:label="@string/title_order"
+        tools:layout="@layout/fragment_cart" />
+</navigation>

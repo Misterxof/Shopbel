@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "31628055984",
+    "project_id": "shopbel-8ef1e",
+    "storage_bucket": "shopbel-8ef1e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:31628055984:android:32aa192131d874911eb275",
+        "android_client_info": {
+          "package_name": "com.misterioes.shopbel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzTHIYXrheyyGmSGE43vCVqpay2sOwgIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
